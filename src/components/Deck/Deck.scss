@@ -1,0 +1,56 @@
+.deck{
+    border: 1px dotted grey;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25vw;
+    height: 25vw;
+}
+#container{
+  //position: absolute;
+  //top: 50px;
+  //left: 0;
+  //right: 0;
+  //margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  //outline: 2px dashed grey;
+}
+#drag{
+  width: 20%;
+  height: 20%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto auto;
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, #333, #444);
+  border: 3px solid rgba(200, 200, 200, 0.01);
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.8);
+}
+#rotate{
+  cursor: grab;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(0deg,#333, #444, #333);
+  &::before{
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 3% auto;
+    height: 12%;
+    width: 1.4%;
+    border-radius: 25%;
+    background: orange;
+    box-shadow: 0 0 2px 0 orange;
+    }
+}
+.active-true{
+  cursor: grabbing;
+}
