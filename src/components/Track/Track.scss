@@ -1,8 +1,9 @@
 .track{
     position: relative;
     width: 100%;
-        height: 100%;
-    border: 1px dotted white;
+    height: 100%;
+    //border: 1px dotted white;
+    color: white;
     cursor: grab;
     //-color: rgba($color: #000000, $alpha: 0.1);
     .track__img{
@@ -10,10 +11,14 @@
         top: 0;
         width: 100%;
         height: 100%;
-        z-index: 0;
+        z-index: -1;
         opacity: 100%;
         transition: 0.2s;
         object-fit: cover;
+    }
+    .track__info{
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
     .track__title{
         margin: 5px 0 5px 0;

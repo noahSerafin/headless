@@ -55,13 +55,17 @@
   cursor: grabbing;
 }
 .playerbuttons-true, .playerbuttons-false{
+  color: white;
   position: relative;
   justify-content: space-between;
-  button{
+  padding-top: 2rem;
+  height: 6rem;
+  .playbtn{
     width: 30%;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 50%;
   }
 }
 .playerbuttons-false::before{
@@ -75,7 +79,4 @@
   opacity: 0.95;
   background-color: black;
   z-index: 99;
-}
-.deck-playing{
-
 }

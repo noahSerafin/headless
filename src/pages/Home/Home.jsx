@@ -20,12 +20,8 @@ const Home = (props) => {
     //const playerR = new Tone.Player(audioR).toDestination();
 
     return(
-        <div className="homepage-container">           
-            <div className="decks">
-              <Deck />
-              <Mixer />
-              <Deck />
-            </div>
+        <div className="homepage-container">            
+            <Mixer />
             <TrackList />
         </div>
     )

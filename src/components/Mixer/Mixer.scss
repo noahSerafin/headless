@@ -1,3 +1,10 @@
+.deck-container{
+  height: 100%;
+  p, .playerinfo{
+    margin: 0.5rem;
+    color: white;
+  }
+}
 .mixer{
     .flex{
         justify-content: space-between;

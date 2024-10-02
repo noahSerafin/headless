@@ -1,13 +1,11 @@
 import React, {useState, useRef, useEffect} from "react";
 import './Deck.scss';
 import * as Tone from 'tone';
-import drone from '../../assets/drone.mp3';
-import AudioPlayer from "../AudioPlayer/AudioPlayer";
 
 //https://codepen.io/taye/pen/wrrxKb
 //https://codepen.io/jsguy/pen/NWGapLB
 
-const Deck = (audio) => {
+const Deck = (volume) => {
   
   const [currentTrack, setCurrentTrack] = useState(null)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -41,9 +39,8 @@ const Deck = (audio) => {
   };
   
   //audio methods
-      
+  //load player    
   useEffect(() => {
-
     if(currentTrack){
       //console.log('currentUrl:', currentTrack.songMeta.file.node.mediaItemUrl)
       if (playerRef.current){
@@ -57,6 +54,7 @@ const Deck = (audio) => {
       playerRef.current = new Tone.Player({
         url: currentTrack.songMeta.file.node.mediaItemUrl,
         autostart: false,
+        volume: volume.volume,
         onload: () => {
           console.log('Track loaded');
           setIsLoaded(true); // Set isLoaded to true once the track is fully loaded
@@ -76,6 +74,15 @@ const Deck = (audio) => {
       }
     };
   }, [currentTrack]);//url, value
+
+  //adjust volume
+  useEffect(() => {
+    if (playerRef.current) {
+      // Update the player volume when the volume prop changes
+      playerRef.current.volume.value = volume.volume;
+      console.log('Volume updated:', volume.volume);
+    }
+  }, [volume]); 
 
     const playPause = () => {
       if(playerRef.current.loaded){
@@ -209,8 +216,10 @@ const Deck = (audio) => {
             <button className="playbtn" onClick={playPause}>{isPlaying ? 'Pause' : 'Play'}</button>
             <button className="playbtn" onClick={() => restart()}>Restart</button>
         </div>
-        <div>DisplayTime: {displayTime}</div>
-        <div>Ref: {currentTimeRef.current}</div>
+        <div className="playerinfo">
+          <p>DisplayTime: {displayTime}</p>
+          <p>Ref: {currentTimeRef.current}</p>
+        </div>
       </div>
       ) : (
       <p>no track selected</p> 
