@@ -16,23 +16,16 @@ const Track = (props) => {
   const {key, node} = props;
   console.log('node:', node)
   //const list = [chill, requestal, softi]
-  var song;
 
-  function preload(){
-   
-  }
-  function play(){
-    //song.play()
-  }
+  const trackData = node;
 
-  //const audio = new Audio()
-
-  const handleDrag = (e) =>{
-    console.log(e.target)
-  }
+  const handleDragStart = (e) => {
+    // Set the track data as JSON in the dataTransfer object
+    e.dataTransfer.setData('track', JSON.stringify(trackData));
+  };
 
   return(
-    <div className="track" onDrag={(e) =>handleDrag(e)} key={key} file={node.songMeta.file.node.mediaItemUrl}>
+    <div className="track" draggable onDragStart={(e) =>handleDragStart(e)} key={key} file={node.songMeta.file.node.mediaItemUrl}>
       <h3 className="track__title">{node.songMeta.artist} - {node.title}</h3>
       <p className="track__bpm">{node.songMeta.bpm}bpm</p>
       <br />
