@@ -98,24 +98,24 @@ const Deck = (audio) => {
     };
     
     const Cue = () => {
-        const player = playerRef.current
-        console.log('cue at ', currentTimeRef.current)   
-        if(isPlaying){ //playing.state == stopped/started
-          setStartTime(Tone.now());
-        } else {
-          player.start(0, startTime)
-          setIsPlaying(true)
-        }
+      const player = playerRef.current
+      console.log('cue at ', currentTimeRef.current)   
+      if(isPlaying){ //playing.state == stopped/started
+        setStartTime(Tone.now());
+      } else {
+        player.start(0, startTime)
+        setIsPlaying(true)
+      }
     }
     
     const restart = () => {
-        const player = playerRef.current
-        currentTimeRef.current = 0
-        setStartTime(Tone.now());
-        setDisplayTime(0)
-        setIsPlaying(true)
-        player.start(0)
-        //reset angle
+      const player = playerRef.current
+      currentTimeRef.current = 0
+      setStartTime(Tone.now());
+      setDisplayTime(0)
+      setIsPlaying(true)
+      player.start(0)
+      //reset angle
     }
 
   // Tick function to update display time

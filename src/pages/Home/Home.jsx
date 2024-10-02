@@ -24,6 +24,7 @@ const Home = (props) => {
             <div className="decks">
               <Deck />
               <Mixer />
+              <Deck />
             </div>
             <TrackList />
         </div>
