@@ -6,7 +6,7 @@ import './Home.scss';
 
 const Home = (props) => {
 
-    const [dockside, setDockside] = useState(true)
+    const [dockside, setDockside] = useState(false)
     /*
     if scrennWidth < 480 {
         setDockside(false)
@@ -15,11 +15,11 @@ const Home = (props) => {
  
     return(
         <div className="homepage-container">    
-            <h1 className="main-title">HEADLESS</h1>
             <div className={"mixer-tracklist w-100 h-100 trackstoside-"+dockside}>
-                <button className='dock-button' onClick={() => {setDockside(!dockside)}}>Dock Side</button>
+                <h1 className="main-title">HEADLESS</h1>
                 <Mixer />
                 <TrackList dockside={dockside}/>
+                <button className='dock-button' onClick={() => {setDockside(!dockside)}}>Dock Side</button>
             </div>        
         </div>
     )

@@ -29,7 +29,7 @@ const Track = (props) => {
       <img className="track__img" alt="cover" src={node.songMeta.coverArt.node.sourceUrl} />
       <div className="track__info">
         <h3 className="track__title">{node.songMeta.artist} - {node.title}</h3>
-        <p className="track__bpm">{node.songMeta.bpm}bpm</p>
+        {node.songMeta.bpm ? <p className="track__bpm">{node.songMeta.bpm}bpm</p> : ''}
         <br />
       </div>
       <div className="track__description">

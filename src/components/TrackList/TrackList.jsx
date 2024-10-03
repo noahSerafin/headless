@@ -60,7 +60,7 @@ const TrackList = (props) => {
       <Swiper
       direction={direction}
       allowTouchMove={false}
-      slidesPerView={6}
+      slidesPerView={8}
       loop={true}
       navigation={true}
       modules={[Navigation]}
