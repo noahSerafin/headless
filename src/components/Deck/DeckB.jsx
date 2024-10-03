@@ -120,15 +120,14 @@ const Deck = (volume) => {
       }
     }
     
-    const restart = () => {
-      const player = playerRef.current
-      currentTimeRef.current = 0
-      setStartTime(Tone.now());
-      setDisplayTime(0)
-      setIsPlaying(true)
-      player.start(0)
-      //reset angle
-    }
+  const restart = () => {
+    const player = playerRef.current
+    currentTimeRef.current = 0
+    setStartTime(Tone.now());
+    setDisplayTime(0)
+    setIsPlaying(true)
+    player.start(0)
+  }
 
   // Tick function to update display time
   useEffect(() => {
@@ -208,6 +207,7 @@ const Deck = (volume) => {
   return(
     <div className="deck-container" onDrop={handleDrop} onDragOver={handleDragOver}>
       <div className="playerinfo">
+        <div className="waveform"></div>
         <p>DisplayTime: {displayTime}</p>
         <p>Ref: {currentTimeRef.current}</p>
       </div>

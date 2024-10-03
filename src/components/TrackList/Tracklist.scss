@@ -10,16 +10,21 @@
     .swiper{
         position: relative;
     }
+    @media screen and (max-width: 480px) {   
+        width: 40%;
+    }
 }
 .dockside-true{
     height: 100vh;
     .swiper-button-prev{
         top: 10px;
+        left: 50%;
         transform: rotate(90deg);
     }
     .swiper-button-next{
         position: absolute;
         transform: rotate(90deg);
         bottom: 10px;
+        left: 50%;
     }
 }

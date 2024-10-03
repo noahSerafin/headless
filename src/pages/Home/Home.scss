@@ -27,13 +27,8 @@
 }
 .mixer-tracklist{
     position: relative;
-    min-width: 900px;
     max-height: 90vh;
-    //overflow: hidden;
-    @media screen and (max-width: 600px) {   
-        display: flex;
-        height: 100%;
-    }
+    overflow: hidden;
     .dock-button{
         position: absolute;
         top: 0;

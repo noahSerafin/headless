@@ -7,6 +7,11 @@ import './Home.scss';
 const Home = (props) => {
 
     const [dockside, setDockside] = useState(true)
+    /*
+    if scrennWidth < 480 {
+        setDockside(false)
+    }
+        */
  
     return(
         <div className="homepage-container">    
