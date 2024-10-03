@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import './Mixer.scss';
-import Deck from "../Deck/DeckB";
+import Deck from "../Deck/Deck";
 
 const Mixer = () => {
   const [lLevel, setLLevel] = useState(100);

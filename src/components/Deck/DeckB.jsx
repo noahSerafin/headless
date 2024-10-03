@@ -28,7 +28,7 @@ const Deck = (props) => {
 
   const handleSlider = (e) => {
     e.preventDefault();
-    var rate = 0.5 + (e.target.value / 100) * 1.5
+    var rate = e.target.value / 100;
     setPlaybackRate(rate);
     if(currentTrack){
       const ogBPM = currentTrack.songMeta.bpm
@@ -36,6 +36,19 @@ const Deck = (props) => {
     }
     if (playerRef.current) {
       playerRef.current.playbackRate = rate;  // Update the player's playback rate
+    }
+    console.log(e.target.value, rate)
+  }
+
+  const inputBPM = (e) => {
+    if(currentTrack){
+      const ogBPM = currentTrack.songMeta.bpm
+      var newBPM = Number(e.target.value)
+      setCurrentBPM(newBPM)
+      const newPlaybackRate = newBPM / ogBPM
+      if (playerRef.current && newPlaybackRate <= 1.5 && newPlaybackRate >= 0.5) {
+        playerRef.current.playbackRate = newPlaybackRate; // Update player's playback rate
+      }
     }
   }
 
@@ -81,7 +94,7 @@ const Deck = (props) => {
       context.lineTo(i, amp + min); // Draw the waveform, centered vertically
     }
 
-    context.strokeStyle = '#007BFF'; // Set waveform color
+    context.strokeStyle = 'orange'; // Set waveform color
     context.lineWidth = 2; // Set line width
     context.stroke(); // Apply the drawing
   };
@@ -142,55 +155,55 @@ const Deck = (props) => {
     }
   }, [volume]); 
 
-    const playPause = () => {
-      if(playerRef.current.loaded){
-        setIsPlaying((prevIsPlaying) => {
-          console.log(playerRef.current.loaded)
-          const player = playerRef.current
-          if (prevIsPlaying) {
-            const elapsedTime = calculateElapsedTime()
-            currentTimeRef.current += elapsedTime;
-            playerRef.current.stop();
-          } else {
-            playerRef.current.start(0, currentTimeRef.current);
-            setStartTime(Tone.now());
-          }
-          console.log(player.state, ' at ', currentTimeRef.current)
+  const playPause = () => {
+    if(playerRef.current.loaded){
+      setIsPlaying((prevIsPlaying) => {
+        console.log(playerRef.current.loaded)
+        const player = playerRef.current
+        if (prevIsPlaying) {
+          const elapsedTime = calculateElapsedTime()
+          currentTimeRef.current += elapsedTime;
+          playerRef.current.stop();
+        } else {
+          playerRef.current.start(0, currentTimeRef.current);
+          setStartTime(Tone.now());
+        }
+        console.log(player.state, ' at ', currentTimeRef.current)
       
-          return !prevIsPlaying;
-        });
-      }
-    };
-    
-    const Cue = () => {
-      const player = playerRef.current
-      console.log('cue at ', currentTimeRef.current)   
-      if(isPlaying){ //playing.state == stopped/started
-        setStartTime(Tone.now());
-      } else {
-        player.start(0, startTime)
-        setIsPlaying(true)
-      }
+        return !prevIsPlaying;
+      });
     }
+  };
+    
+  const Cue = () => {
+    if(playerRef.current){
+      setIsPlaying(false)
+      currentTimeRef.current = 0
+      setStartTime(0);
+      setDisplayTime(0)
+      setIsPlaying(true)
+      canvasRef.current.style.transform = `translateX(0px)`
+      //canvasRef.current.style.transform = `translateX(${startTime*pixelsPerSecond}}px)`
+      playerRef.current.start(0)
+    }
+  }
     
   const restart = () => {
-    const player = playerRef.current
-    currentTimeRef.current = 0
-    setStartTime(Tone.now());
-    setDisplayTime(0)
-    setIsPlaying(true)
-    player.start(0)
+    if(playerRef.current){
+      currentTimeRef.current = 0
+      setStartTime(0);
+      setDisplayTime(0)
+      setIsPlaying(false)
+      canvasRef.current.style.transform = `translateX(0px)`
+      playerRef.current.stop()
+    }
   }
 
   // Tick function to update display time
   useEffect(() => {
     let interval;
-    //console.log('record:', recordRef)
-    //console.log('canvas:', canvasRef)
     if (isPlaying) {
       interval = setInterval(() => {
-        // Update currentTimeRef while playing
-        //currentTimeRef.current += 0.1; // Increment time for display (100 ms)
         const elapsedTime = currentTimeRef.current + calculateElapsedTime()
         setDisplayTime(elapsedTime)
         if(recordRef.current){
@@ -198,7 +211,7 @@ const Deck = (props) => {
           recordRef.current.style.transform = `rotate(${rotation*2}rad)`;
         }
         if(canvasRef.current){
-          canvasRef.current.style.transform = `translateX(-${elapsedTime*pixelsPerSecond}px)`
+          canvasRef.current.style.transform = `translateX(-${elapsedTime*pixelsPerSecond*playbackRate}px)`
         }
       }, 100); // Update every 100 ms
     }
@@ -253,7 +266,6 @@ const Deck = (props) => {
     }
   }
   const stopRotate = function (event) {
-    //console.log(active)
     setActive(false)
     //const element = event.target;
 
@@ -264,17 +276,20 @@ const Deck = (props) => {
   return(
     <div className={`deck-container deck-${side}`} onDrop={handleDrop} onDragOver={handleDragOver}>
       <div className="playerinfo">
+        {currentTrack ? <h3 className="deck__title">{currentTrack.songMeta.artist} - {currentTrack.title}</h3> : ''}
         <div className="waveform-container">
           <div className="waveform-bg"></div>
           <canvas className="waveform" ref={canvasRef} width="10000" height="40"></canvas>
           <div className="waveform-marker"></div>
         </div>
-        {currentTrack && currentBPM ? <p>{currentBPM.toFixed(2)}-BPM</p> : ''}
-        <p>DisplayTime: {displayTime}</p>
-        <p>Ref: {currentTimeRef.current}</p>
+        {currentTrack && currentBPM ? 
+        <div className="bpm-controls">
+          <input className='bpm-input' id="bpmInput" type="number" value={currentBPM} onChange={inputBPM} placeholder="BPM"/>
+        </div>
+        : ''}
       </div>
       <div className='deck'>
-        <input className="vertical slider" type="range" min="0" max="100" onChange={handleSlider} value={((playbackRate - 0.5) / 1.5) * 100} orient="vertical" />
+        <input className="vertical slider" type="range" min="50" max="150" onChange={handleSlider} value={playbackRate * 100} orient="vertical" />
         <div id='container'> 
           <div ref={recordRef} id="rotate" onMouseDown={(e) => startRotate(e)} onMouseMove={(e) => rotate(e)} onMouseUp={(e) => stopRotate(e)} onMouseLeave={(e) => stopRotate(e)} className={`active-${active}`}>
             <div id="drag">
@@ -290,7 +305,9 @@ const Deck = (props) => {
             <button className="playbtn" onClick={playPause}>
               <img src={isPlaying ? pause : play } alt= {isPlaying ? 'pause' : 'play' }/>
             </button>
-            <button className="playbtn" onClick={() => restart()}>Restart</button>
+            <button className="playbtn" onClick={() => restart()}>
+              <span></span>
+            </button>
         </div>
       ) : (
         <p>no track selected</p> 
@@ -301,3 +318,7 @@ const Deck = (props) => {
 }
 
 export default Deck;
+/*
+<p>DisplayTime: {displayTime}</p>
+<p>Ref: {currentTimeRef.current}</p>
+*/
