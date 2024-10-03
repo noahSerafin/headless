@@ -3,8 +3,8 @@ import './Mixer.scss';
 import Deck from "../Deck/DeckB";
 
 const Mixer = () => {
-  const [lLevel, setLLevel] = useState(0);
-  const [rLevel, setRLevel] = useState(0);
+  const [lLevel, setLLevel] = useState(100);
+  const [rLevel, setRLevel] = useState(100);
   const [crossfade, setCrossfade] = useState(50);
   const [lAudio, setLAudio] = useState(0);
   const [rAudio, setRAudio] = useState(0);
@@ -55,7 +55,7 @@ const Mixer = () => {
 
   return (
     <div className="decks">
-        <Deck volume={lAudio}/>
+        <Deck side='L' volume={lAudio}/>
         <div className="mixer">
             <div className="flex align-center volumes-container">
                 <input className="vertical slider" type="range" min="0" max="100" onChange={(e) => handleSlider("L", e.target.value)} value={lLevel} orient="vertical" />
@@ -65,7 +65,7 @@ const Mixer = () => {
               <input type="range" min="0" max="100" onChange={(e) => handleSlider("C", e.target.value)} value={crossfade} className="slider crossfader" />
             </div>
         </div>
-        <Deck volume={rAudio}/>
+        <Deck side='R' volume={rAudio}/>
     </div>
   );
 };

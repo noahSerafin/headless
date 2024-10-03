@@ -6,7 +6,7 @@ import './Home.scss';
 
 const Home = (props) => {
 
-    const [dockside, setDockside] = useState(true)
+    const [dockside, setDockside] = useState(false)
     /*
     if scrennWidth < 480 {
         setDockside(false)
