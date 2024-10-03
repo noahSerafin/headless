@@ -1,22 +1,25 @@
+@media screen {
+    
+}
 .tracklist{
-    padding: 0 10px 0 10px;
-    height: 120px;
-    width: 100vw;
+   //padding: 0 10px 0 10px;
+    height: 100%;
+    width: 100%;
     border: 1px dotted gray;
     display: flex;
-    .swiper-slide{
-        border: 1px dotted black;
-    }
-    /*.track{
-        height: 100px;
-        width: 100px;
-        cursor: grab;
-        //-color: rgba($color: #000000, $alpha: 0.1);
+    .swiper{
         position: relative;
-        .track__img{
-            position: absolute;
-            top: 0;
-            z-index: 0;
-        }
-    }*/
+    }
+}
+.dockside-true{
+    height: 100vh;
+    .swiper-button-prev{
+        top: 10px;
+        transform: rotate(90deg);
+    }
+    .swiper-button-next{
+        position: absolute;
+        transform: rotate(90deg);
+        bottom: 10px;
+    }
 }

@@ -1,13 +1,20 @@
-.deck-container{
-  height: 100%;
-  p, .playerinfo{
-    margin: 0.5rem;
-    color: white;
-  }
-}
 .mixer{
-    .flex{
-        justify-content: space-between;
+  position: relative;
+  margin-top: 4rem;
+  height: 30vw;
+  width: 12vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 1vw;
+  padding-right: 1vw;
+    .volumes-container{
+      top: 0;
+      justify-content: space-between;
+      align-items: center;//flex-start;
+      width: 12vw;
+      height: 30vw;
     }
     .slider {
         -webkit-appearance: none;
@@ -40,8 +47,20 @@
         cursor: pointer;
     }
     .vertical{
-        height: 125px;
+        height: 90%;//40vw;
+        max-height: 300px;
         width: 25px;
         appearance: slider-vertical
     }
+  .crossfader-container{
+    position: relative;
+    width: 100%;
+    .crossfader{
+      position: absolute;
+      width: 170%;
+      left: 50%;
+      transform: translate(-50%);
+      z-index: 1;
+    }
+  }
 }

@@ -35,6 +35,7 @@ const GET_SONGS = gql`
     }
     `
 const TrackList = (props) => {
+  const {dockside} = props;
 
   const width = useRef(window.innerWidth)
   const spv = width.current/100
@@ -52,10 +53,12 @@ const TrackList = (props) => {
 
   //const [song, setSong] = useState('');
   //console.log('edges:', data.songs.edges)
+  const direction = dockside ? 'vertical' : 'horizontal';
   
   return (
-    <div className="tracklist">
+    <div className={"tracklist dockside-"+dockside}>
       <Swiper
+      direction={direction}
       allowTouchMove={false}
       slidesPerView={6}
       loop={true}

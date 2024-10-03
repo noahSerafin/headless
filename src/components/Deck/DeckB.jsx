@@ -1,6 +1,8 @@
 import React, {useState, useRef, useEffect} from "react";
 import './Deck.scss';
 import * as Tone from 'tone';
+import play from '../../assets/play.svg'
+import pause from '../../assets/pause.svg'
 
 //https://codepen.io/taye/pen/wrrxKb
 //https://codepen.io/jsguy/pen/NWGapLB
@@ -58,6 +60,9 @@ const Deck = (volume) => {
         onload: () => {
           console.log('Track loaded');
           setIsLoaded(true); // Set isLoaded to true once the track is fully loaded
+        },
+        onstop: () => {
+          setIsPlaying(false);
         },
         onerror: (error) => {
           console.error('Error loading track:', error);
@@ -202,28 +207,32 @@ const Deck = (volume) => {
 
   return(
     <div className="deck-container" onDrop={handleDrop} onDragOver={handleDragOver}>
+      <div className="playerinfo">
+        <p>DisplayTime: {displayTime}</p>
+        <p>Ref: {currentTimeRef.current}</p>
+      </div>
       <div className='deck'> 
         <div id='container'> 
           <div ref={recordRef} id="rotate" onMouseDown={(e) => startRotate(e)} onMouseMove={(e) => rotate(e)} onMouseUp={(e) => stopRotate(e)} onMouseLeave={(e) => stopRotate(e)} className={`active-${active}`}>
-            <div id="drag"></div>
+            <div id="drag">
+              {currentTrack ? <img className="deck__img" alt="cover" src={currentTrack.songMeta.coverArt.node.sourceUrl} /> : ''}
+            </div>
           </div>
         </div>
       </div>
-      {currentTrack ? (
       <div className='audioplayer'>
+      {currentTrack ? (
         <div className={"flex playerbuttons-"+isLoaded}>
             <button className="playbtn" onClick={() => Cue()}>Cue</button>
-            <button className="playbtn" onClick={playPause}>{isPlaying ? 'Pause' : 'Play'}</button>
+            <button className="playbtn" onClick={playPause}>
+              <img src={isPlaying ? pause : play } alt= {isPlaying ? 'pause' : 'play' }/>
+            </button>
             <button className="playbtn" onClick={() => restart()}>Restart</button>
         </div>
-        <div className="playerinfo">
-          <p>DisplayTime: {displayTime}</p>
-          <p>Ref: {currentTimeRef.current}</p>
-        </div>
-      </div>
       ) : (
-      <p>no track selected</p> 
+        <p>no track selected</p> 
       )}
+      </div>
     </div>
   )
 }

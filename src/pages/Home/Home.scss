@@ -1,12 +1,50 @@
+.main-title{
+    margin: auto;
+    text-align: center;
+    width: 84%;
+}
 .decks{
+    border: 1px dotted white;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: 75vh;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 96%;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    transition: all 0.3s;
 }
 .flex{
     display: flex;
 }
 .align-center{
     align-items: center;
+}
+.w-100{
+    width: 100;
+}
+.h-100{
+    height: 100;
+}
+.mixer-tracklist{
+    position: relative;
+    min-width: 900px;
+    max-height: 90vh;
+    //overflow: hidden;
+    @media screen and (max-width: 600px) {   
+        display: flex;
+        height: 100%;
+    }
+    .dock-button{
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0.2rem 0.5rem;
+        z-index: 99;
+    }
+}
+.trackstoside-true{
+    display: flex;
+    .dock-button{
+        right: 12%;
+    }
 }

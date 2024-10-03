@@ -57,11 +57,13 @@ const Mixer = () => {
     <div className="decks">
         <Deck volume={lAudio}/>
         <div className="mixer">
-            <div className="flex align-center">
+            <div className="flex align-center volumes-container">
                 <input className="vertical slider" type="range" min="0" max="100" onChange={(e) => handleSlider("L", e.target.value)} value={lLevel} orient="vertical" />
                 <input className="vertical slider" type="range" min="0" max="100" onChange={(e) => handleSlider("R", e.target.value)} value={rLevel} orient="vertical" />
             </div>
-            <input type="range" min="0" max="100" onChange={(e) => handleSlider("C", e.target.value)} value={crossfade} className="slider" />
+            <div className="crossfader-container">
+              <input type="range" min="0" max="100" onChange={(e) => handleSlider("C", e.target.value)} value={crossfade} className="slider crossfader" />
+            </div>
         </div>
         <Deck volume={rAudio}/>
     </div>
